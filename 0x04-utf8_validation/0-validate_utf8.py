@@ -7,9 +7,8 @@ Validate UTF-8
 
 def validUTF8(data):
     '''Validate UTF-8'''
-    for i in data:
-        if (len(bin(i)) - 2) > 32:
-            return False
-        if i > 127:
-            return False
-    return True
+    try:
+        result = bytes(data).decode('utf-8')
+        return True
+    except Exception as e:
+        return False
