@@ -19,7 +19,7 @@ an N×N chessboard. Write a program that solves the N queens problem.
     -You are only allowed to import the sys module
 '''
 
-from sys import argv
+import sys
 
 
 def is_attack(i, j):
@@ -76,12 +76,12 @@ def nqueens(N):
 
 
 if __name__ == "__main__":
-    if len(argv) != 2:
+    if len(sys.argv) != 2:
         print('Usage: nqueens N')
         exit(1)
     else:
         #chessboard
         #NxN matrix with all elements 0
-        N = eval(argv[1])
+        N = eval(sys.argv[1])
         board = [[0]*N for _ in range(N)]
         nqueens(N)
