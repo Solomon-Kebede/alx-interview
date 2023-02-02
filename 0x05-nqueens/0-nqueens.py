@@ -31,7 +31,7 @@ def nqueens(N):
         if not isinstance(N, int):
             print('N must be a number')
             exit(1)
-        print('HI')
+        return []
 
 
 if __name__ == "__main__":
