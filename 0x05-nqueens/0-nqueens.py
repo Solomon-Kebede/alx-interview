@@ -31,16 +31,16 @@ def solveNQueens(n):
     diag2 = [False] * (2 * n - 1)
 
     def dfs(i, board):
-      if i == n:
-        ans.append(board)
-        return
+        if i == n:
+            ans.append(board)
+            return
 
-      for j in range(n):
-        if cols[j] or diag1[i + j] or diag2[j - i + n - 1]:
-          continue
-        cols[j] = diag1[i + j] = diag2[j - i + n - 1] = True
-        dfs(i + 1, board + ['.' * j + 'Q' + '.' * (n - j - 1)])
-        cols[j] = diag1[i + j] = diag2[j - i + n - 1] = False
+        for j in range(n):
+            if cols[j] or diag1[i + j] or diag2[j - i + n - 1]:
+                continue
+            cols[j] = diag1[i + j] = diag2[j - i + n - 1] = True
+            dfs(i + 1, board + ['.' * j + 'Q' + '.' * (n - j - 1)])
+            cols[j] = diag1[i + j] = diag2[j - i + n - 1] = False
 
     dfs(0, [])
     return ans
@@ -58,17 +58,17 @@ def nqueens(N):
         else:
             solutions = solveNQueens(N)
             for solution in solutions:
-              result = []
-              # print(solution)
-              for positions in solution:
-                # print(positions)
-                row_index = solution.index(positions)
-                for row in positions:
-                  if row == 'Q':
-                    # print([row_index, positions.index(row)])
-                    result.append([row_index, positions.index(row)])
+                result = []
+                # print(solution)
+                for positions in solution:
+                    # print(positions)
+                    row_index = solution.index(positions)
+                    for row in positions:
+                        if row == 'Q':
+                            # print([row_index, positions.index(row)])
+                            result.append([row_index, positions.index(row)])
 
-              print(result)
+                print(result)
 
 
 if __name__ == "__main__":
