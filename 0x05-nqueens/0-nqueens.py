@@ -22,37 +22,27 @@ an N×N chessboard. Write a program that solves the N queens problem.
 import sys
 
 
-def is_attack(i, j):
-    #checking if there is a queen in row or column
-    for k in range(0,N):
-        if board[i][k]==1 or board[k][j]==1:
-            return True
-    #checking diagonals
-    for k in range(0,N):
-        for l in range(0,N):
-            if (k+l==i+j) or (k-l==i-j):
-                if board[k][l]==1:
-                    return True
-    return False
+def solveNQueens(n):
+    '''Leetcode soln: solveNQueens'''
+    ans = []
+    cols = [False] * n
+    diag1 = [False] * (2 * n - 1)
+    diag2 = [False] * (2 * n - 1)
 
+    def dfs(i, board):
+      if i == n:
+        ans.append(board)
+        return
 
-def N_queen(n):
-    #if n is 0, solution found
-    if n==0:
-        return True
-    for i in range(0,N):
-        for j in range(0,N):
-            '''checking if we can place a queen here or not
-            queen will not be placed if the place is being attacked
-            or already occupied'''
-            if (not(is_attack(i,j))) and (board[i][j]!=1):
-                board[i][j] = 1
-                #recursion
-                #wether we can put the next queen with this arrangment or not
-                if N_queen(n-1)==True:
-                    return True
-                board[i][j] = 0
-    return False
+      for j in range(n):
+        if cols[j] or diag1[i + j] or diag2[j - i + n - 1]:
+          continue
+        cols[j] = diag1[i + j] = diag2[j - i + n - 1] = True
+        dfs(i + 1, board + ['.' * j + 'Q' + '.' * (n - j - 1)])
+        cols[j] = diag1[i + j] = diag2[j - i + n - 1] = False
+
+    dfs(0, [])
+    return ans
 
 
 def nqueens(N):
@@ -65,14 +55,19 @@ def nqueens(N):
             print('N must be a number')
             exit(1)
         else:
-            N_queen(N)
-            result = []
-            for row_index in range(len(board)):
-                row = board[row_index]
-                for index in range(len(row)):
-                    if row[index] == 1:
-                        result.append([row_index, index])
-            print(result)
+            solutions = solveNQueens(N)
+            for solution in solutions:
+              result = []
+              # print(solution)
+              for positions in solution:
+                # print(positions)
+                row_index = solution.index(positions)
+                for row in positions:
+                  if row == 'Q':
+                    # print([row_index, positions.index(row)])
+                    result.append([row_index, positions.index(row)])
+
+              print(result)
 
 
 if __name__ == "__main__":
@@ -80,17 +75,5 @@ if __name__ == "__main__":
         print('Usage: nqueens N')
         exit(1)
     else:
-        #chessboard
-        #NxN matrix with all elements 0
         N = eval(sys.argv[1])
-        if N == 4:
-            print([[0, 1], [1, 3], [2, 0], [3, 2]])
-            print([[0, 2], [1, 0], [2, 3], [3, 1]])
-        elif N == 6:
-            print([[0, 1], [1, 3], [2, 5], [3, 0], [4, 2], [5, 4]])
-            print([[0, 2], [1, 5], [2, 1], [3, 4], [4, 0], [5, 3]])
-            print([[0, 3], [1, 0], [2, 4], [3, 1], [4, 5], [5, 2]])
-            print([[0, 4], [1, 2], [2, 0], [3, 5], [4, 3], [5, 1]])
-        else:
-            board = [[0]*N for _ in range(N)]
-            nqueens(N)
+        nqueens(N)
