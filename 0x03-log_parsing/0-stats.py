@@ -19,8 +19,6 @@ Write a script that reads stdin line by line and computes metrics:
 '''
 
 import sys
-import ipaddress
-import datetime
 
 
 method_and_path = '] "GET /projects/260 HTTP/1.1" '
@@ -42,6 +40,8 @@ def printer():
 
 def checker(ip, date, status_code):
     '''Checks validity of log data'''
+    import ipaddress
+    import datetime
     ipaddress.ip_address(ip)
     datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
     if status_code in status_dict.keys():
@@ -58,7 +58,9 @@ try:
             status_code, file_size = ip_date_status_size[1].split(" ")
             # print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
             try:
-                checker(ip, date, status_code)
+                if status_code in status_dict.keys():
+                    status_dict[status_code] += 1
+                total_size += int(file_size)
                 count += 1
                 if count == 10:
                     count = 0
