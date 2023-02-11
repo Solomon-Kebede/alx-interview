@@ -30,6 +30,13 @@ status_dict = {
 }
 total_size = 0
 count = 0
+
+def printer():
+    print('File size: {}'.format(total_size))
+    for k, v in status_dict.items():
+        if v != 0:
+            print('{}: {}'.format(k, v))
+
 for line in sys.stdin:
     try:
         line = line.splitlines()[0]
@@ -44,17 +51,13 @@ for line in sys.stdin:
                 datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
                 if status_code in status_dict.keys():
                     status_dict[status_code] += 1
+                total_size += int(file_size)
+                count += 1
+                if count == 10:
+                    count = 0
+                    printer()
             except Exception:
                 continue
-            total_size += file_size
-            count += 1
-            if count == 10:
-                count = 0
-                print('File size: {}'.format(total_size))
-                for k, v in status_dict.items():
-                    print('{}: {}'.format(k, v))
             # break
     except Exception:
-        print('File size: {}'.format(total_size))
-        for k, v in status_dict.items():
-            print('{}: {}'.format(k, v))
+        printer()
