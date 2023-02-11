@@ -22,6 +22,7 @@ import sys
 
 
 method_and_path = '] "GET /projects/260 HTTP/1.1" '
+status_list = [200, 301, 400, 401, 403, 404, 405, 500]
 status_dict = {
     '200': 0, '301': 0, '400': 0, '401': 0,
     '403': 0, '404': 0, '405': 0, '500': 0
@@ -33,9 +34,12 @@ count = 0
 def printer():
     print('File size: {}'.format(total_size))
     '''Print metrics'''
-    for k, v in status_dict.items():
-        if v != 0:
-            print('{}: {}'.format(k, v))
+
+    for item in status_list:
+        key = str(item)
+        value = status_dict[key]
+        if value != 0:
+            print('{}: {}'.format(key, value))
 
 
 def checker(ip, date, status_code):
