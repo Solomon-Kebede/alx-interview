@@ -34,7 +34,6 @@ count = 0
 def printer():
     print('File size: {}'.format(total_size))
     '''Print metrics'''
-
     for item in status_list:
         key = str(item)
         value = status_dict[key]
@@ -44,13 +43,16 @@ def printer():
 
 def checker(ip, date, status_code):
     '''Checks validity of log data'''
-    import ipaddress
-    import datetime
-    ipaddress.ip_address(ip)
-    datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
-    if status_code in status_dict.keys():
-        status_dict[status_code] += 1
-    total_size += int(file_size)
+    try:
+        import ipaddress
+        import datetime
+        ipaddress.ip_address(ip)
+        datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+        if status_code in status_dict.keys():
+            status_dict[status_code] += 1
+        total_size += int(file_size)
+    except Exception:
+        pass
 
 
 try:
@@ -61,15 +63,12 @@ try:
             ip, date = ip_date_status_size[0].split(" - [")
             status_code, file_size = ip_date_status_size[1].split(" ")
             # print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
-            try:
-                if status_code in status_dict.keys():
-                    status_dict[status_code] += 1
-                total_size += int(file_size)
-                count += 1
-                if count == 10:
-                    count = 0
-                    printer()
-            except Exception:
-                continue
+            if status_code in status_dict.keys():
+                status_dict[status_code] += 1
+            total_size += int(file_size)
+            count += 1
+            if count == 10:
+                count = 0
+                printer()
 except KeyboardInterrupt:
     printer()
