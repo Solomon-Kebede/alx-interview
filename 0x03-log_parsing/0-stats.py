@@ -37,8 +37,8 @@ for line in sys.stdin:
             ip_date_status_size = line.split(method_and_path)
             ip, date = ip_date_status_size[0].split(" - [")
             status_code, file_size = ip_date_status_size[1].split(" ")
-            print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
-            print()
+            # print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
+            # print()
             try:
                 ipaddress.ip_address(ip)
                 datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
@@ -47,12 +47,14 @@ for line in sys.stdin:
             except Exception:
                 continue
             total_size += file_size
-            count +=1
+            count += 1
             if count == 10:
                 count = 0
+                print('File size: {}'.format(total_size))
                 for k, v in status_dict.items():
                     print('{}: {}'.format(k, v))
             # break
     except Exception:
+        print('File size: {}'.format(total_size))
         for k, v in status_dict.items():
             print('{}: {}'.format(k, v))
