@@ -19,54 +19,40 @@ Write a script that reads stdin line by line and computes metrics:
 '''
 
 import sys
-import re
 import ipaddress
 import datetime
 
 
-'''
-line = '192.8.12.16 - [2023-02-03 13:53:31.507501]\
- "GET /projects/260 HTTP/1.1" 405 843'
-'''
-# sys_stdin = [line, line, 'sdfgbgfb'] * 7
-logRegex = re.compile(
-    r'(.*) - \[(.*)\] ("GET /projects/260 HTTP/1.1") (.*) (.*)'
-)
-chkstr = '"GET /projects/260 HTTP/1.1"'
-status_list = [200, 301, 400, 401, 403, 404, 405, 500]
-status_record = {}
-count = 0
-results = []
+method_and_path = '] "GET /projects/260 HTTP/1.1" '
+status_dict = {
+    '200': 0, '301': 0, '400': 0, '401': 0,
+    '403': 0, '404': 0, '405': 0, '500': 0
+}
 total_size = 0
-# for line in sys_stdin:
+count = 0
 for line in sys.stdin:
-    # print(count)
-    if count == 10:
-        count = 0
-        print('File size: {}'.format(total_size))
-        for status in status_list:
-            if status in status_record.keys():
-                print('{}: {}'.format(status, status_record.get(status)))
-        # print(results)
-        # results = []
-        total_size = 0
-        status_record = {}
-    parsed_logs = logRegex.search(line)
-    if parsed_logs is not None:
-        ip, date, request_info, status_code, file_size = parsed_logs.groups()
-        if chkstr == request_info:
-            if status_code in status_list:
-                total_size += int(file_size)
-            if status_code in status_record.keys():
-                status_record[status_code] += 1
-            else:
-                status_record[status_code] = 1
-            results.append(
-                [
-                    ipaddress.ip_address(ip),
-                    datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f'),
-                    status_code,
-                    file_size
-                ]
-            )
-    count += 1
+    try:
+        line = line.splitlines()[0]
+        if method_and_path in line:
+            ip_date_status_size = line.split(method_and_path)
+            ip, date = ip_date_status_size[0].split(" - [")
+            status_code, file_size = ip_date_status_size[1].split(" ")
+            print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
+            print()
+            try:
+                ipaddress.ip_address(ip)
+                datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+                if status_code in status_dict.keys():
+                    status_dict[status_code] += 1
+            except Exception:
+                continue
+            total_size += file_size
+            count +=1
+            if count == 10:
+                count = 0
+                for k, v in status_dict.items():
+                    print('{}: {}'.format(k, v))
+            # break
+    except Exception:
+        for k, v in status_dict.items():
+            print('{}: {}'.format(k, v))
