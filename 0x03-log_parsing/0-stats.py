@@ -31,33 +31,39 @@ status_dict = {
 total_size = 0
 count = 0
 
+
 def printer():
     print('File size: {}'.format(total_size))
+    '''Print metrics'''
     for k, v in status_dict.items():
         if v != 0:
             print('{}: {}'.format(k, v))
 
-for line in sys.stdin:
-    try:
+
+def checker(ip, date, status_code):
+    '''Checks validity of log data'''
+    ipaddress.ip_address(ip)
+    datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+    if status_code in status_dict.keys():
+        status_dict[status_code] += 1
+    total_size += int(file_size)
+
+
+try:
+    for line in sys.stdin:
         line = line.splitlines()[0]
         if method_and_path in line:
             ip_date_status_size = line.split(method_and_path)
             ip, date = ip_date_status_size[0].split(" - [")
             status_code, file_size = ip_date_status_size[1].split(" ")
             # print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
-            # print()
             try:
-                ipaddress.ip_address(ip)
-                datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
-                if status_code in status_dict.keys():
-                    status_dict[status_code] += 1
-                total_size += int(file_size)
+                checker(ip, date, status_code)
                 count += 1
                 if count == 10:
                     count = 0
                     printer()
             except Exception:
                 continue
-            # break
-    except Exception:
-        printer()
+except KeyboardInterrupt:
+    printer()
