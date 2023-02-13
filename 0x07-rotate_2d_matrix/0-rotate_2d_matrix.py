@@ -42,21 +42,28 @@ r2c2 = r0c2
 ------------------
 '''
 def rotate_2d_matrix(matrix):
-	"""Given an n x n 2D matrix, rotate it 90 degrees clockwise."""
-	matrix_size = len(matrix)
-	# print(matrix)
-	# print(id(matrix))
-	matrix_copy = []
-	for i in range(matrix_size):
-		matrix_copy.append([0] * matrix_size)
-	print(matrix_copy)
-	# print(id(matrix), id(matrix_copy))
-	# print(f"{matrix[0]} => {id(matrix[2])}")
-	# matrix.reverse()
-	# print(f"{matrix[0]} => {id(matrix[0])}")
-	for row_index in range(matrix_size):
-		for column_index in range(matrix_size):
-			# print(f"({row_index}, {column_index}) = ({(matrix_size - 1) - column_index}, {row_index})")
-			matrix_copy[row_index][column_index] = matrix[(matrix_size - 1) - column_index][row_index]
-		print()
-	print(matrix_copy)
+    """Given an n x n 2D matrix, rotate it 90 degrees clockwise."""
+    matrix_size = len(matrix)
+    matrix_copy = []
+    # Check id consistency
+    print(f"id(matrix) = {id(matrix)}")
+    for i in range(matrix_size):
+        print(f"id[{i}](matrix) = {id(matrix[i])}")
+    # Base matrix for deep copy
+    for i in range(matrix_size):
+        matrix_copy.append([0] * matrix_size)
+    print(matrix_copy)
+    # Deep copy of matrix
+    for row_index in range(matrix_size):
+        for column_index in range(matrix_size):
+            # print(f"({row_index}, {column_index}) = ({(matrix_size - 1) - column_index}, {row_index})")
+            matrix_copy[row_index][column_index] = matrix[(matrix_size - 1) - column_index][row_index]
+    print(matrix_copy)
+    # Edit old matrix in-place
+    for row_index in range(matrix_size):
+        for column_index in range(matrix_size):
+            matrix[row_index][column_index] = matrix_copy[row_index][column_index]
+    # Check id consistency
+    print(f"id(matrix) = {id(matrix)}")
+    for i in range(matrix_size):
+        print(f"id[{i}](matrix) = {id(matrix[i])}")
