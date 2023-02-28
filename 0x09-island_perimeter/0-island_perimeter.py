@@ -31,7 +31,7 @@ def island_perimeter(grid):
     the island in the grid'''
     total_perimeter = 0
     water = 0
-    land = 0
+    land = 1
     for row_index in range(len(grid)):
         r = row_index
         row = grid[r]
@@ -51,28 +51,28 @@ def island_perimeter(grid):
                     free_perimeter += 1
                 else:
                     top_cell = grid[top_row_index][column_index]
-                    if top_cell == land:
+                    if top_cell != land:
                         free_perimeter += 1
 
                 if bottom_row_index >= len(grid):
                     free_perimeter += 1
                 else:
                     bottom_cell = grid[bottom_row_index][column_index]
-                    if bottom_cell == land:
+                    if bottom_cell != land:
                         free_perimeter += 1
 
                 if left_column_index < 0:
                     free_perimeter += 1
                 else:
                     left_cell = grid[row_index][left_column_index]
-                    if left_cell == land:
+                    if left_cell != land:
                         free_perimeter += 1
 
                 if right_column_index < 0:
                     free_perimeter += 1
                 else:
                     right_cell = grid[row_index][right_column_index]
-                    if right_cell == land:
+                    if right_cell != land:
                         free_perimeter += 1
             total_perimeter = total_perimeter + free_perimeter
     return (total_perimeter)
