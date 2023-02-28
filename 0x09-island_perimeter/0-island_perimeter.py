@@ -68,7 +68,7 @@ def island_perimeter(grid):
                     if left_cell != land:
                         free_perimeter += 1
 
-                if right_column_index < 0:
+                if right_column_index >= len(row):
                     free_perimeter += 1
                 else:
                     right_cell = grid[row_index][right_column_index]
