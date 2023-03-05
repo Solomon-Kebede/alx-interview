@@ -7,6 +7,8 @@
 def minOperations(n):
     '''List out and Check the combinations
     of all valid copy paste operations'''
+    if n <= 1:
+        return 0
     CopyAll = '1'
     Paste = '0'
     refined = []
@@ -55,9 +57,3 @@ def minOperations(n):
     # print(f'Minimum operation: {min_ops_count}')
     # print()
     return min_ops_count
-
-
-if __name__ == '__main__':
-    minOperations(9)
-    minOperations(4)
-    minOperations(12)
