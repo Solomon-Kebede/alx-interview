@@ -75,7 +75,7 @@ and current_player: {} and \
 current_set_size = {}".format(
                     n, current_player,
                     current_set_size))
-            logger(f"\t\t\tscore_board '{score_board}'")
+            logger("\t\t\tscore_board '{}'".format(score_board))
             current_player = switchPlayer(current_player)
         already_removed = set()
         for n in current_range:
@@ -103,7 +103,7 @@ current_set_size = {}".format(
                 logger('\t\t\t\tAlready removed: {}'.format(already_removed))
                 if current_set == set():
                     score_board[current_player] += 1
-                    logger(f"\t\t\tscore_board '{score_board}'")
+                    logger("\t\t\tscore_board '{}'".format(score_board))
             elif n_is_prime is True:
                 logger('\t\t\t\tBefore: {}'.format(current_set))
                 multiples = generateMultiples(n, int(current_set_size / n) + 1)
@@ -114,7 +114,7 @@ current_set_size = {}".format(
                 logger('\t\t\t\tAlready removed: {}'.format(already_removed))
                 if current_set == set():
                     score_board[current_player] += 1
-                    logger(f"\t\t\tscore_board '{score_board}'")
+                    logger("\t\t\tscore_board '{}'".format(score_board))
             current_player = switchPlayer(current_player)
         logger()
     scores = list(score_board.values())
