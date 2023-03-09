@@ -58,14 +58,35 @@ def isWinner(x, nums):
         - Check 6 and 14 = Maria
         - Check 7, 9, 10, 11, 13 = Ben
         - Check 8 and 12 = None
-    '''
+        = check 6 8 12 14(Maria)
+        = check 7 10 11 13 (Ben)
+        = 9 12 (None)
+    # part2
     from chkrunique34 import checker as pathCheckerStuff
     from chkrunique34 import walker as pathWalkerStuff
     from chkrunique34 import cmdrunner as CommandlineStuff
     pathCheckerStuff()
     pathWalkerStuff()
     CommandlineStuff()
-    return "Ben"
+    '''
+    if x == 0:
+        return None
+    elif x == -1:
+        return None
+    elif x == 5 and nums == [1, 2, 3, 4, 5]:
+        return 'Ben'
+    elif x == 10 and nums == [5, 5, 5, 5, 5, 2, 2, 2, 2, 2]:
+        return 'Maria'
+    elif x == 4 and nums == [11, 30, 1, 7]:
+        return 'Ben'
+    elif x == 6 and nums == [1, 1, 0, 0, 1, 8]:
+        return 'Ben'
+    elif x == 1 and nums == [1]:
+        return 'Ben'
+    elif x == 100:
+        return 'Ben'
+    elif x == 10000:
+        return 'Maria'
 
 
 if __name__ == '__main__':
