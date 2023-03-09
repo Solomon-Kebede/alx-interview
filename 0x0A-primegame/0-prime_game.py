@@ -70,6 +70,11 @@ def isWinner(x, nums):
         logger('\t\tCurrent set: {}'.format(current_set))
         if current_set == set():
             score_board[current_player] += 1
+            logger("\t\tcurrent number: {} \
+and current_player: {} and \
+current_set_size = {}".format(
+                    n, current_player,
+                    current_set_size))
             logger(f"\t\t\tscore_board '{score_board}'")
             current_player = switchPlayer(current_player)
         already_removed = set()
@@ -123,6 +128,7 @@ current_set_size = {}".format(
 
 
 if __name__ == '__main__':
+    '''Tests'''
     print(isPrime(1))
     print(generateMultiples(5, 10))
     print(isWinner(5, [4, 5, 1]))
