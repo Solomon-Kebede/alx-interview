@@ -30,27 +30,45 @@ status_dict = {
 total_size = 0
 count = 0
 
-stats = "----STATS-----"
-
 
 def printer():
-    # print(stats)
     print('File size: {}'.format(total_size))
-    for key, value in status_dict.items():
-        if value > 0:
+    '''Print metrics'''
+    for item in status_list:
+        key = str(item)
+        value = status_dict[key]
+        if value != 0:
             print('{}: {}'.format(key, value))
+
+
+def checker(ip, date, status_code):
+    '''Checks validity of log data'''
+    try:
+        import ipaddress
+        import datetime
+        ipaddress.ip_address(ip)
+        datetime.datetime.strptime(date, '%Y-%m-%d %H:%M:%S.%f')
+        if status_code in status_dict.keys():
+            status_dict[status_code] += 1
+        total_size += int(file_size)
+    except Exception:
+        pass
+
 
 try:
     for line in sys.stdin:
-        if count == 10:
-            printer()
-            count = 0
-        line_clean = line.splitlines()[0]
-        total_size += int(line_clean.split(" ")[-1])
-        status = line_clean.split(" ")[-2]
-        status_dict[status] += 1
-        # print(line_clean)
-        count += 1
-
+        line = line.splitlines()[0]
+        if method_and_path in line:
+            ip_date_status_size = line.split(method_and_path)
+            ip, date = ip_date_status_size[0].split(" - [")
+            status_code, file_size = ip_date_status_size[1].split(" ")
+            # print(ip, ' & ', date, ' & ', status_code, ' & ', file_size)
+            if status_code in status_dict.keys():
+                status_dict[status_code] += 1
+            total_size += int(file_size)
+            count += 1
+            if count == 10:
+                count = 0
+                printer()
 except KeyboardInterrupt:
     printer()
