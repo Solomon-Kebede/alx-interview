@@ -40,9 +40,12 @@ def printer():
         if value > 0:
             print('{}: {}'.format(key, value))
 
+
 try:
     for line in sys.stdin:
-        print(repr(line))
+        if count == 2:
+            printer()
+        # print(repr(line))
         if count == 10:
             printer()
             count = 0
