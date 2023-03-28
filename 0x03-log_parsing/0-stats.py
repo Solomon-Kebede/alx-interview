@@ -28,7 +28,7 @@ status_dict = {
     '403': 0, '404': 0, '405': 0, '500': 0
 }
 total_size = 0
-count = 0
+count = 1
 
 stats = "----STATS-----"
 
@@ -42,6 +42,7 @@ def printer():
 
 try:
     for line in sys.stdin:
+        print(repr(line))
         if count == 10:
             printer()
             count = 0
@@ -49,7 +50,7 @@ try:
         total_size += int(line_clean.split(" ")[-1])
         status = line_clean.split(" ")[-2]
         status_dict[status] += 1
-        # print(line_clean)
+        print(line_clean)
         count += 1
 
 except KeyboardInterrupt:
