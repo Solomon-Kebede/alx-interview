@@ -43,18 +43,22 @@ def printer():
 
 try:
     for line in sys.stdin:
-        if count == 2:
-            printer()
         # print(repr(line))
         if count == 10:
+            print(1)
             printer()
             count = 0
+        print(2)
         line_clean = line.splitlines()[0]
         total_size += int(line_clean.split(" ")[-1])
         status = line_clean.split(" ")[-2]
         status_dict[status] += 1
         print(line_clean)
         count += 1
+        print(3)
+        if count == 2:
+            print(0)
+            printer()
 
 except KeyboardInterrupt:
     printer()
