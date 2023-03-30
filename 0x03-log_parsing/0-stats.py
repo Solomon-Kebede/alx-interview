@@ -28,8 +28,11 @@ try:
         split_data = (line.split(" "))
         # check input format
         if len(split_data) == 9 and REQUEST_INFO in line:
-            if int(split_data[-2]) in status_codes.keys():
-                # print(split_data)
+            try:
+                status = int(split_data[-2])
+            except ValueError:
+                continue
+            if status in status_codes.keys():
                 total_size += int(split_data[-1])
                 status_codes[int(split_data[-2])] += 1
                 count += 1
