@@ -37,7 +37,7 @@ try:
                 continue
             if status in status_codes.keys():
                 total_size += int(split_data[-1])
-                status_codes[int(split_data[-2])] += 1
+                status_codes[status] += 1
                 count += 1
                 # print(count)
                 if count == 10:
