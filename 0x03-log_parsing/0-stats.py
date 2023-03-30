@@ -24,7 +24,6 @@ def printer():
 try:
     for line in sys.stdin:
         if not line:
-            printer()
             continue
         split_data = (line.split(" "))
         # check input format
@@ -35,8 +34,6 @@ try:
                 status_codes[int(split_data[-2])] += 1
                 count += 1
                 # print(count)
-                if count == 1:
-                    printer()
                 if count == 10:
                     printer()
                     count = 0
