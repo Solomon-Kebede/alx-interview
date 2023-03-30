@@ -15,7 +15,10 @@ count = 0
 def printer():
     '''Prints final result'''
     print('File size: {}'.format(total_size))
-    for key, value in status_codes.items():
+    statuses = list(status_codes.keys())
+    statuses.sort()
+    for key in statuses:
+        value = status_codes.get(key)
         if value > 0:
             print('{}: {}'.format(key, value))
 
